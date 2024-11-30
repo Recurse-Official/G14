@@ -1,158 +1,264 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financify - Login & Register</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ece9e6, #ffffff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        .form-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        .quote {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #666;
-            font-style: italic;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 80%;
-            padding: 15px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #6200ea;
-            box-shadow: 0 0 8px rgba(98, 0, 234, 0.5);
-            outline: none;
-        }
-        button {
-            width: 80%;
-            padding: 15px;
-            background: linear-gradient(135deg, #6200ea, #3700b3);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-            margin-top: 20px;
-        }
-        button:hover {
-            background: linear-gradient(135deg, #3700b3, #6200ea);
-        }
-        .forgot-password {
-            display: block;
-            margin-top: 15px;
-            color: #6200ea;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .forgot-password:hover {
-            color: #3700b3;
-            text-decoration: underline;
-        }
-        .register-button {
-            display: block;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #6200ea;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .register-button:hover {
-            text-decoration: underline;
-        }
-        .error-message {
-            color: red;
-            margin-top: 10px;
-            display: none;
-        }
-        .bold-purple {
-            font-weight: bold;
-            color: #6200ea;
-        }
-        .gold {
-            color: gold;
-        }
-    </style>
+    <title>Financial Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="quote">"Eat 5-star and let <span class="bold-purple">FIN<span class="bold-purple gold">A</span>NC<span class="bold-purple gold">I</span>FY</span> do your finances." </div>
-        <div class="form-container">
-            <h1>Login to <span class="bold-purple">Fin<span class="bold-purple gold">a</span>nc<span class="bold-purple gold">i</span>fy</span></h1>
-            <form id="loginForm" action="/login" method="POST">
-                <div class="form-group">
-                    <input type="text" name="username" id="login-username" placeholder="Username" required>
+<body class="bg-gray-100 font-roboto">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" id="username" name="username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
-                <div class="form-group">
-                    <input type="password" name="password" id="login-password" placeholder="Password" required>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
-                <button type="submit">Login</button>
-                <div class="error-message" id="loginErrorMessage">Invalid username or password</div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+                </div>
             </form>
-            <a class="forgot-password" onclick="showForgotPasswordForm()">Forgot your password?</a>
-            <a class="register-button" onclick="showRegisterForm()">New User? Register Here</a>
+            <div class="mt-6 text-center">
+                <a href="#" id="registerLink" class="text-indigo-600 hover:text-indigo-500">New user? Register here</a>
+            </div>
         </div>
-        <div class="form-container" id="registerFormContainer" style="display: none;">
-            <h1>Register for <span class="bold-purple">Financify</span></h1>
-            <form id="registerForm" action="/register" method="POST">
-                <div class="form-group">
-                    <input type="text" name="username" id="register-username" placeholder="Username" required>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="registerPage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="newUsername" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" id="newUsername" name="newUsername" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
-                <div class="form-group">
-                    <input type="password" name="password" id="register-password" placeholder="Password" required>
+                <div>
+                    <label for="newPassword" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="newPassword" name="newPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
-                <button type="submit">Register</button>
-                <div class="error-message" id="registerErrorMessage">Username already exists</div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Register</button>
+                </div>
             </form>
+            <div class="mt-6 text-center">
+                <a href="#" id="loginLink" class="text-indigo-600 hover:text-indigo-500">Already have an account? Login here</a>
+            </div>
         </div>
-        <div class="form-container" id="forgotPasswordFormContainer" style="display: none;">
-            <h1>Forgot Password</h1>
-            <form id="forgotPasswordForm" action="/forgot-password" method="POST">
-                <div class="form-group">
-                    <input type="text" name="username" id="forgot-username" placeholder="Username" required>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="incomePage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Income and Expenses</h2>
+            <form id="incomeForm" class="space-y-4">
+                <div>
+                    <label for="income" class="block text-sm font-medium text-gray-700">Monthly Income</label>
+                    <input type="number" id="income" name="income" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
-                <button type="submit">Reset Password</button>
-                <div class="error-message" id="forgotErrorMessage">Username not found</div>
+                <div>
+                    <label for="essential1" class="block text-sm font-medium text-gray-700">Essential Expense 1</label>
+                    <input type="text" id="essential1" name="essential1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="essential2" class="block text-sm font-medium text-gray-700">Essential Expense 2</label>
+                    <input type="text" id="essential2" name="essential2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="essential3" class="block text-sm font-medium text-gray-700">Essential Expense 3</label>
+                    <input type="text" id="essential3" name="essential3" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="essential4" class="block text-sm font-medium text-gray-700">Essential Expense 4</label>
+                    <input type="text" id="essential4" name="essential4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="essential5" class="block text-sm font-medium text-gray-700">Essential Expense 5</label>
+                    <input type="text" id="essential5" name="essential5" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="essential6" class="block text-sm font-medium text-gray-700">Essential Expense 6</label>
+                    <input type="text" id="essential6" name="essential6" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
+                </div>
             </form>
         </div>
     </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="summaryPage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Summary</h2>
+            <div id="summaryContent" class="space-y-4">
+                <!-- Summary content will be dynamically inserted here -->
+            </div>
+            <div class="flex items-center justify-between mt-6">
+                <button id="showDistributionButton" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Show Distribution</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="distributionPage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Income Distribution</h2>
+            <canvas id="incomeChart"></canvas>
+        </div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="dailyExpensePage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Daily Expenses</h2>
+            <div id="dailyExpenseContent" class="space-y-4">
+                <!-- Daily expense content will be dynamically inserted here -->
+            </div>
+            <div class="flex items-center justify-between mt-6">
+                <button id="generateReportButton" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Generate Monthly Report</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center hidden" id="monthlyReportPage">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-6 text-center">Monthly Report</h2>
+            <div id="monthlyReportContent" class="space-y-4">
+                <!-- Monthly report content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerLink').addEventListener('click', function() {
+            document.getElementById('loginForm').parentElement.classList.add('hidden');
+            document.getElementById('registerPage').classList.remove('hidden');
+        });
+
+        document.getElementById('loginLink').addEventListener('click', function() {
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('loginForm').parentElement.classList.remove('hidden');
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('loginForm').parentElement.classList.add('hidden');
+            document.getElementById('incomePage').classList.remove('hidden');
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('incomePage').classList.remove('hidden');
+        });
+
+        document.getElementById('incomeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const income = parseFloat(document.getElementById('income').value);
+            const essentialExpenses = [
+                parseFloat(document.getElementById('essential1').value),
+                parseFloat(document.getElementById('essential2').value),
+                parseFloat(document.getElementById('essential3').value),
+                parseFloat(document.getElementById('essential4').value),
+                parseFloat(document.getElementById('essential5').value),
+                parseFloat(document.getElementById('essential6').value)
+            ];
+
+            const totalEssentialExpenses = essentialExpenses.reduce((acc, val) => acc + val, 0);
+            let nonEssentialLimit = 0;
+            let emergencyFund = 0;
+
+            if (income >= 100000) {
+                nonEssentialLimit = 15000;
+                emergencyFund = 10000;
+            } else if (income < 70000) {
+                nonEssentialLimit = 11000;
+                emergencyFund = 10000;
+            }
+
+            const remainingIncome = income - totalEssentialExpenses - nonEssentialLimit - emergencyFund;
+
+            const summaryContent = `
+                <div>
+                    <h3 class="text-lg font-bold">Income: ₹${income}</h3>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Total Essential Expenses: ₹${totalEssentialExpenses}</h3>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Non-Essential Expenditure Limit: ₹${nonEssentialLimit}</h3>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Emergency Fund: ₹${emergencyFund}</h3>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Remaining Income: ₹${remainingIncome}</h3>
+                </div>
+            `;
+
+            document.getElementById('summaryContent').innerHTML = summaryContent;
+            document.getElementById('incomePage').classList.add('hidden');
+            document.getElementById('summaryPage').classList.remove('hidden');
+
+            document.getElementById('showDistributionButton').addEventListener('click', function() {
+                document.getElementById('summaryPage').classList.add('hidden');
+                document.getElementById('distributionPage').classList.remove('hidden');
+
+                const ctx = document.getElementById('incomeChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Essential Expenses', 'Non-Essential Limit', 'Emergency Fund', 'Remaining Income'],
+                        datasets: [{
+                            data: [totalEssentialExpenses, nonEssentialLimit, emergencyFund, remainingIncome],
+                            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += '₹' + context.raw;
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+
+        document.getElementById('generateReportButton').addEventListener('click', function() {
+            // Simulate daily expenses for the month
+            const dailyExpenses = Array.from({ length: 30 }, () => Math.floor(Math.random() * 500));
+            const totalDailyExpenses = dailyExpenses.reduce((acc, val) => acc + val, 0);
+
+            const monthlyReportContent = `
+                <div>
+                    <h3 class="text-lg font-bold">Total Daily Expenses: ₹${totalDailyExpenses}</h3>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">Remaining Income After Daily Expenses: ₹${remainingIncome - totalDailyExpenses}</h3>
+                </div>
+            `;
+
+            document.getElementById('monthlyReportContent').innerHTML = monthlyReportContent;
+            document.getElementById('dailyExpensePage').classList.add('hidden');
+            document.getElementById('monthlyReportPage').classList.remove('hidden');
+        });
+    </script>
 </body>
 </html>
