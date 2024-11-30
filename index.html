@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financy - Login</title>
+    <title>Financify - Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,16 +26,17 @@
         .login-container h1 {
             margin-bottom: 20px;
             font-size: 24px;
-            color: #333;
+            font-weight: bold;
+            color: purple;
+        }
+        .login-container h1 span {
+            color: gold;
         }
         .form-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-bottom: 15px;
         }
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
+        input[type="text"],
+        input[type="password"] {
             width: 80%;
             padding: 15px;
             margin: 5px 0;
@@ -44,13 +45,12 @@
             font-size: 16px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .login-container input[type="text"]:focus,
-        .login-container input[type="password"]:focus {
-            border-color: #6200ea;
-            box-shadow: 0 0 8px rgba(98, 0, 234, 0.5);
+        input:focus {
+            border-color: purple;
+            box-shadow: 0 0 8px rgba(128, 0, 128, 0.5);
             outline: none;
         }
-        .login-container button {
+        button {
             width: 80%;
             padding: 15px;
             background: linear-gradient(135deg, #6200ea, #3700b3);
@@ -60,27 +60,25 @@
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
-            margin-top: 20px;
         }
-        .login-container button:hover {
+        button:hover {
             background: linear-gradient(135deg, #3700b3, #6200ea);
         }
         .forgot-password {
-            display: block;
             margin-top: 15px;
-            color: #6200ea;
+            color: purple;
             text-decoration: none;
             font-size: 14px;
         }
         .forgot-password:hover {
-            color: #3700b3;
+            color: gold;
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h1>Login to Financy</h1>
+        <h1>FIN<span>A</span>NC<span>I</span>FY</h1>
         <form action="/login" method="POST">
             <div class="form-group">
                 <input type="text" name="username" placeholder="Username" required>
@@ -92,5 +90,17 @@
         </form>
         <a href="/forgot-password" class="forgot-password">Forgot your password?</a>
     </div>
+    <script>
+        document.querySelector('.forgot-password').addEventListener('click', function(event) {
+            event.preventDefault();
+            const username = prompt("Enter your username:");
+            if (username) {
+                const newPassword = prompt("Enter your new password:");
+                if (newPassword) {
+                    alert(`Password updated successfully for ${username}.`);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
