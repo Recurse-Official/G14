@@ -103,13 +103,20 @@
             margin-top: 10px;
             display: none;
         }
+        .bold-purple {
+            font-weight: bold;
+            color: #6200ea;
+        }
+        .gold {
+            color: gold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="quote">"Eat 5-star and let FINANCIFY do your finances." </div>
+        <div class="quote">"Eat 5-star and let <span class="bold-purple">FIN<span class="bold-purple gold">A</span>NC<span class="bold-purple gold">I</span>FY</span> do your finances." </div>
         <div class="form-container">
-            <h1>Login to Financify</h1>
+            <h1>Login to <span class="bold-purple">Fin<span class="bold-purple gold">a</span>nc<span class="bold-purple gold">i</span>fy</span></h1>
             <form id="loginForm" action="/login" method="POST">
                 <div class="form-group">
                     <input type="text" name="username" id="login-username" placeholder="Username" required>
@@ -124,7 +131,7 @@
             <a class="register-button" onclick="showRegisterForm()">New User? Register Here</a>
         </div>
         <div class="form-container" id="registerFormContainer" style="display: none;">
-            <h1>Register for Financy</h1>
+            <h1>Register for <span class="bold-purple">Financify</span></h1>
             <form id="registerForm" action="/register" method="POST">
                 <div class="form-group">
                     <input type="text" name="username" id="register-username" placeholder="Username" required>
@@ -147,91 +154,5 @@
             </form>
         </div>
     </div>
-
-    <script>
-        function showRegisterForm() {
-            document.getElementById('registerFormContainer').style.display = 'block';
-            document.getElementById('forgotPasswordFormContainer').style.display = 'none';
-        }
-
-        function showForgotPasswordForm() {
-            document.getElementById('forgotPasswordFormContainer').style.display = 'block';
-            document.getElementById('registerFormContainer').style.display = 'none';
-        }
-
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-
-            fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === 'Login successful!') {
-                    alert('Login successful!');
-                } else {
-                    document.getElementById('loginErrorMessage').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('register-username').value;
-            const password = document.getElementById('register-password').value;
-
-            fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === 'Registration successful!') {
-                    alert('Registration successful!');
-                } else {
-                    document.getElementById('registerErrorMessage').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-
-        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('forgot-username').value;
-
-            fetch('/forgot-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === 'Password reset link sent!') {
-                    alert('Password reset link sent!');
-                } else {
-                    document.getElementById('forgotErrorMessage').style.display = 'block';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    </script>
 </body>
 </html>
