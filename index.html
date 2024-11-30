@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financy - Login</title>
+    <title>Financify - Login & Register</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,19 +14,32 @@
             height: 100vh;
             margin: 0;
         }
-        .login-container {
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .form-container {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
             text-align: center;
+            margin-bottom: 20px;
         }
-        .login-container h1 {
+        h1 {
             margin-bottom: 20px;
             font-size: 24px;
             color: #333;
+        }
+        .quote {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #666;
+            font-style: italic;
         }
         .form-group {
             display: flex;
@@ -34,8 +47,7 @@
             align-items: center;
             margin-bottom: 15px;
         }
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
+        input[type="text"], input[type="password"] {
             width: 80%;
             padding: 15px;
             margin: 5px 0;
@@ -44,13 +56,12 @@
             font-size: 16px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .login-container input[type="text"]:focus,
-        .login-container input[type="password"]:focus {
+        input[type="text"]:focus, input[type="password"]:focus {
             border-color: #6200ea;
             box-shadow: 0 0 8px rgba(98, 0, 234, 0.5);
             outline: none;
         }
-        .login-container button {
+        button {
             width: 80%;
             padding: 15px;
             background: linear-gradient(135deg, #6200ea, #3700b3);
@@ -62,7 +73,7 @@
             transition: background 0.3s;
             margin-top: 20px;
         }
-        .login-container button:hover {
+        button:hover {
             background: linear-gradient(135deg, #3700b3, #6200ea);
         }
         .forgot-password {
@@ -76,6 +87,17 @@
             color: #3700b3;
             text-decoration: underline;
         }
+        .register-button {
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #6200ea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .register-button:hover {
+            text-decoration: underline;
+        }
         .error-message {
             color: red;
             margin-top: 10px;
@@ -84,26 +106,63 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login to Financy</h1>
-        <form id="loginForm" action="/login" method="POST">
-            <div class="form-group">
-                <input type="text" name="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
-            <button type="submit">Login</button>
-            <div class="error-message" id="errorMessage">Invalid username or password</div>
-        </form>
-        <a href="/forgot-password" class="forgot-password">Forgot your password?</a>
+    <div class="container">
+        <div class="quote">"Eat 5-star and let FINANCIFY do your finances." </div>
+        <div class="form-container">
+            <h1>Login to Financify</h1>
+            <form id="loginForm" action="/login" method="POST">
+                <div class="form-group">
+                    <input type="text" name="username" id="login-username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="login-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login</button>
+                <div class="error-message" id="loginErrorMessage">Invalid username or password</div>
+            </form>
+            <a class="forgot-password" onclick="showForgotPasswordForm()">Forgot your password?</a>
+            <a class="register-button" onclick="showRegisterForm()">New User? Register Here</a>
+        </div>
+        <div class="form-container" id="registerFormContainer" style="display: none;">
+            <h1>Register for Financy</h1>
+            <form id="registerForm" action="/register" method="POST">
+                <div class="form-group">
+                    <input type="text" name="username" id="register-username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="register-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Register</button>
+                <div class="error-message" id="registerErrorMessage">Username already exists</div>
+            </form>
+        </div>
+        <div class="form-container" id="forgotPasswordFormContainer" style="display: none;">
+            <h1>Forgot Password</h1>
+            <form id="forgotPasswordForm" action="/forgot-password" method="POST">
+                <div class="form-group">
+                    <input type="text" name="username" id="forgot-username" placeholder="Username" required>
+                </div>
+                <button type="submit">Reset Password</button>
+                <div class="error-message" id="forgotErrorMessage">Username not found</div>
+            </form>
+        </div>
     </div>
 
     <script>
+        function showRegisterForm() {
+            document.getElementById('registerFormContainer').style.display = 'block';
+            document.getElementById('forgotPasswordFormContainer').style.display = 'none';
+        }
+
+        function showForgotPasswordForm() {
+            document.getElementById('forgotPasswordFormContainer').style.display = 'block';
+            document.getElementById('registerFormContainer').style.display = 'none';
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const username = document.querySelector('input[name="username"]').value;
-            const password = document.querySelector('input[name="password"]').value;
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
 
             fetch('/login', {
                 method: 'POST',
@@ -117,7 +176,56 @@
                 if (data.message === 'Login successful!') {
                     alert('Login successful!');
                 } else {
-                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('loginErrorMessage').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Registration successful!') {
+                    alert('Registration successful!');
+                } else {
+                    document.getElementById('registerErrorMessage').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('forgot-username').value;
+
+            fetch('/forgot-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Password reset link sent!') {
+                    alert('Password reset link sent!');
+                } else {
+                    document.getElementById('forgotErrorMessage').style.display = 'block';
                 }
             })
             .catch(error => {
