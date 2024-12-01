@@ -9,9 +9,16 @@
   to make their life easier and better.
 
 # Preview
+- Login page
 ![image](https://github.com/user-attachments/assets/ca9c74f8-9eb2-4cea-a777-664e8db085a1)
 
+- User input page
 ![image](https://github.com/user-attachments/assets/9c73f3a0-2e26-4fca-8d5f-bbd53cb46c36)
 
+- Summary report page
 ![image](https://github.com/user-attachments/assets/c5f3bfe0-3866-4836-a06b-16fc57d5d608)
+
+- Visual representation page
+![image](https://github.com/user-attachments/assets/39e962c2-a780-48f9-90b1-7aec95f58c27)
+
 
